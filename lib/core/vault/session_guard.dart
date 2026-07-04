@@ -13,7 +13,9 @@ class SessionGuard {
     return action(_session!, operationId);
   }
 
-  Future<T> executeAsync<T>(Future<T> Function(VaultSession session, String operationId) action) async {
+  Future<T> executeAsync<T>(
+    Future<T> Function(VaultSession session, String operationId) action,
+  ) async {
     if (_session == null || !_session!.isUnlocked) {
       throw Exception('SessionGuard: Vault is locked or no session exists.');
     }

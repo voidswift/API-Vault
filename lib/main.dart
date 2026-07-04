@@ -5,11 +5,7 @@ import 'app/router/app_router.dart';
 import 'app/theme/app_theme.dart';
 
 void main() {
-  runApp(
-    const ProviderScope(
-      child: ApiVaultApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: ApiVaultApp()));
 }
 
 class ApiVaultApp extends ConsumerWidget {

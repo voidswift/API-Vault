@@ -8,12 +8,10 @@ class VaultSession {
   SecretKey? _dek;
   final _uuid = const Uuid();
 
-  VaultSession({
-    required this.sessionId,
-    required SecretKey dek,
-  })  : _sessionTimer = Stopwatch()..start(),
-        _lastActivityElapsed = Duration.zero,
-        _dek = dek;
+  VaultSession({required this.sessionId, required SecretKey dek})
+    : _sessionTimer = Stopwatch()..start(),
+      _lastActivityElapsed = Duration.zero,
+      _dek = dek;
 
   bool get isUnlocked => _dek != null;
 

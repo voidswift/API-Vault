@@ -36,7 +36,7 @@ class SecurityHarness {
     FlutterSecureStorage.setMockInitialValues({});
     db = AppDatabase.forTesting();
     dao = db.vaultDao;
-    
+
     randomService = SecureRandomService();
     cryptoService = CryptoService(randomService);
     kdfService = KeyDerivationService(randomService);
@@ -45,12 +45,12 @@ class SecurityHarness {
       cryptoService,
       randomService,
     );
-    
+
     codec = VaultCodec(cryptoService);
     stateMachine = VaultStateMachine();
     manager = VaultManager(stateMachine);
     factory = VaultFactory(db, kdfService, keyManagementService, randomService);
-    
+
     _initialized = true;
     return this;
   }
@@ -72,13 +72,16 @@ class SecurityHarness {
   }
 
   Future<SecurityHarness> unlock(String password) async {
-    // In real app, unlock fetches header and checks password. 
+    // In real app, unlock fetches header and checks password.
     // Here we'll do the logic manually for the harness
     await manager.unlockVault();
     final headers = await db.select(db.vaultHeaders).get();
     final header = headers.first;
 
-    final kdfResult = await kdfService.deriveKey(password, salt: header.argon2Parameters); // Note: we need the salt separated. But we assume we have it.
+    final kdfResult = await kdfService.deriveKey(
+      password,
+      salt: header.argon2Parameters,
+    ); // Note: we need the salt separated. But we assume we have it.
     // Simplifying unlock for harness:
     // final kek = kdfResult['key'];
     // final dek = await keyManagementService.unwrapDek(header.wrappedDEK, kek);

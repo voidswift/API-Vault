@@ -16,7 +16,11 @@ class VaultRepository {
       final item = await _dao.getItem(id);
       if (item == null) throw Exception('Secret not found');
 
-      return await _codec.decode(item.encryptedPayload, item.nonce, session.dek);
+      return await _codec.decode(
+        item.encryptedPayload,
+        item.nonce,
+        session.dek,
+      );
     });
   }
 
@@ -25,16 +29,22 @@ class VaultRepository {
       final items = await _dao.getAllItems();
       final List<SecretData> decrypted = [];
       for (final item in items) {
-        decrypted.add(await _codec.decode(item.encryptedPayload, item.nonce, session.dek));
+        decrypted.add(
+          await _codec.decode(item.encryptedPayload, item.nonce, session.dek),
+        );
       }
       return decrypted;
     });
   }
 
-  Future<void> saveSecret(String id, SecretData data, {String? categoryId}) async {
+  Future<void> saveSecret(
+    String id,
+    SecretData data, {
+    String? categoryId,
+  }) async {
     return _guard.executeAsync((session) async {
       final encoded = await _codec.encode(data, session.dek);
-      
+
       final companion = VaultItemsCompanion.insert(
         id: id,
         encryptedPayload: encoded.encryptedPayload,

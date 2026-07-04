@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+
 class MemoryGuard {
   static void clear(Uint8List? buffer) {
     if (buffer == null) return;

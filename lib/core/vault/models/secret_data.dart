@@ -15,5 +15,6 @@ class SecretData with _$SecretData {
     @Default(false) bool archived,
   }) = _SecretData;
 
-  factory SecretData.fromJson(Map<String, dynamic> json) => _$SecretDataFromJson(json);
+  factory SecretData.fromJson(Map<String, dynamic> json) =>
+      _$SecretDataFromJson(json);
 }

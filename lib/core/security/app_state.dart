@@ -1,8 +1,1 @@
-enum AppState {
-  initial,
-  noVault,
-  locked,
-  unlocking,
-  unlocked,
-  error,
-}
+enum AppState { initial, noVault, locked, unlocking, unlocked, error }

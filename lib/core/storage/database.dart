@@ -9,6 +9,7 @@ import 'tables/settings_table.dart';
 import 'tables/vault_header_table.dart';
 import 'daos/vault_dao.dart';
 part 'database.g.dart';
+
 @DriftDatabase(
   tables: [
     Categories,
@@ -38,6 +39,7 @@ class AppDatabase extends _$AppDatabase {
     );
   }
 }
+
 QueryExecutor _openConnection() {
   return driftDatabase(name: 'api_vault');
 }

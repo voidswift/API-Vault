@@ -27,14 +27,14 @@ class VaultCodec {
   Future<EncodedVaultItem> encode(SecretData data, SecretKey dek) async {
     final jsonString = jsonEncode(data.toJson());
     final plaintext = Uint8List.fromList(utf8.encode(jsonString));
-    
+
     final cryptoResult = await _cryptoService.encrypt(plaintext, dek);
-    
+
     // Pack ciphertext || mac
     final packed = BytesBuilder(copy: false)
       ..add(cryptoResult.ciphertext)
       ..add(cryptoResult.mac);
-      
+
     return EncodedVaultItem(
       encryptedPayload: packed.toBytes(),
       nonce: cryptoResult.nonce,
@@ -42,7 +42,11 @@ class VaultCodec {
     );
   }
 
-  Future<SecretData> decode(Uint8List encryptedPayload, Uint8List nonce, SecretKey dek) async {
+  Future<SecretData> decode(
+    Uint8List encryptedPayload,
+    Uint8List nonce,
+    SecretKey dek,
+  ) async {
     if (encryptedPayload.length < kGcmTagLength) {
       throw Exception('Invalid payload length');
     }
@@ -53,10 +57,10 @@ class VaultCodec {
 
     final cryptoResult = CryptoResult(ciphertext, nonce, mac);
     final decryptedBytes = await _cryptoService.decrypt(cryptoResult, dek);
-    
+
     final jsonString = utf8.decode(decryptedBytes);
     final Map<String, dynamic> json = jsonDecode(jsonString);
-    
+
     return SecretData.fromJson(json);
   }
 }

@@ -39,22 +39,21 @@ class VaultFactory {
 
     // 4. Save to VaultHeaders
     final vaultId = _randomService.generateUuid();
-    await _db.into(_db.vaultHeaders).insert(
-      VaultHeadersCompanion.insert(
-        version: 1,
-        createdAt: DateTime.now(),
-        vaultId: vaultId,
-        cryptoVersion: 1,
-        schemaVersion: 1,
-        argon2Parameters: argonParams,
-        wrappedDEK: wrappedDek,
-        checksum: 'todo_checksum', 
-      ),
-    );
+    await _db
+        .into(_db.vaultHeaders)
+        .insert(
+          VaultHeadersCompanion.insert(
+            version: 1,
+            createdAt: DateTime.now(),
+            vaultId: vaultId,
+            cryptoVersion: 1,
+            schemaVersion: 1,
+            argon2Parameters: argonParams,
+            wrappedDEK: wrappedDek,
+            checksum: 'todo_checksum',
+          ),
+        );
 
-    return VaultSession(
-      sessionId: _randomService.generateUuid(),
-      dek: dek,
-    );
+    return VaultSession(sessionId: _randomService.generateUuid(), dek: dek);
   }
 }

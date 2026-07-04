@@ -26,7 +26,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         case AppState.error:
           return '/lock';
         case AppState.unlocked:
-          if (state.matchedLocation == '/lock' || state.matchedLocation == '/splash' || state.matchedLocation == '/no-vault') {
+          if (state.matchedLocation == '/lock' ||
+              state.matchedLocation == '/splash' ||
+              state.matchedLocation == '/no-vault') {
             return '/home';
           }
           return null; // Stay on current unlocked screen
@@ -41,14 +43,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         path: '/no-vault',
         builder: (context, state) => const NoVaultScreen(),
       ),
-      GoRoute(
-        path: '/lock',
-        builder: (context, state) => const LockScreen(),
-      ),
-      GoRoute(
-        path: '/home',
-        builder: (context, state) => const HomeScreen(),
-      ),
+      GoRoute(path: '/lock', builder: (context, state) => const LockScreen()),
+      GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
     ],
   );
 });

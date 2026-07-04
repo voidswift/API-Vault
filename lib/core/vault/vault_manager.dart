@@ -15,46 +15,46 @@ class VaultManager {
     try {
       // Orchestrate creation via VaultFactory
       _stateMachine.transition(VaultEvent.createSucceeded);
-    
-  void testSetSession(VaultSession session) {
-    _session = session;
-  }
-} catch (e) {
+
+      void testSetSession(VaultSession session) {
+        _session = session;
+      }
+    } catch (e) {
       _stateMachine.transition(VaultEvent.createFailed);
       rethrow;
-    
-  void testSetSession(VaultSession session) {
-    _session = session;
+
+      void testSetSession(VaultSession session) {
+        _session = session;
+      }
+    }
+
+    void testSetSession(VaultSession session) {
+      _session = session;
+    }
   }
-}
-  
-  void testSetSession(VaultSession session) {
-    _session = session;
-  }
-}
 
   Future<void> unlockVault() async {
     _stateMachine.transition(VaultEvent.unlockStarted);
     try {
       // Handle unlock via KeyManagementService
       _stateMachine.transition(VaultEvent.unlockSucceeded);
-    
-  void testSetSession(VaultSession session) {
-    _session = session;
-  }
-} catch (e) {
+
+      void testSetSession(VaultSession session) {
+        _session = session;
+      }
+    } catch (e) {
       _stateMachine.transition(VaultEvent.unlockFailed);
       rethrow;
-    
-  void testSetSession(VaultSession session) {
-    _session = session;
+
+      void testSetSession(VaultSession session) {
+        _session = session;
+      }
+    }
+
+    void testSetSession(VaultSession session) {
+      _session = session;
+    }
   }
-}
-  
-  void testSetSession(VaultSession session) {
-    _session = session;
-  }
-}
 
   Future<void> lockVault() async {
     _stateMachine.transition(VaultEvent.lockStarted);
@@ -62,23 +62,23 @@ class VaultManager {
       _session?.destroy();
       _session = null;
       _stateMachine.transition(VaultEvent.lockCompleted);
-    
-  void testSetSession(VaultSession session) {
-    _session = session;
-  }
-} catch (e) {
+
+      void testSetSession(VaultSession session) {
+        _session = session;
+      }
+    } catch (e) {
       _stateMachine.transition(VaultEvent.fatalError);
       rethrow;
-    
-  void testSetSession(VaultSession session) {
-    _session = session;
+
+      void testSetSession(VaultSession session) {
+        _session = session;
+      }
+    }
+
+    void testSetSession(VaultSession session) {
+      _session = session;
+    }
   }
-}
-  
-  void testSetSession(VaultSession session) {
-    _session = session;
-  }
-}
 
   void testSetSession(VaultSession session) {
     _session = session;
