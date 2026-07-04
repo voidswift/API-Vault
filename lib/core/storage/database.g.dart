@@ -1933,12 +1933,12 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   }
 }
 
-class $CryptoMetadataTable extends CryptoMetadata
-    with TableInfo<$CryptoMetadataTable, CryptoMetadataData> {
+class $VaultHeadersTable extends VaultHeaders
+    with TableInfo<$VaultHeadersTable, VaultHeader> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $CryptoMetadataTable(this.attachedDatabase, [this._alias]);
+  $VaultHeadersTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1952,23 +1952,12 @@ class $CryptoMetadataTable extends CryptoMetadata
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _argon2ParametersMeta = const VerificationMeta(
-    'argon2Parameters',
+  static const VerificationMeta _versionMeta = const VerificationMeta(
+    'version',
   );
   @override
-  late final GeneratedColumn<String> argon2Parameters = GeneratedColumn<String>(
-    'argon2_parameters',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _algorithmVersionMeta = const VerificationMeta(
-    'algorithmVersion',
-  );
-  @override
-  late final GeneratedColumn<int> algorithmVersion = GeneratedColumn<int>(
-    'algorithm_version',
+  late final GeneratedColumn<int> version = GeneratedColumn<int>(
+    'version',
     aliasedName,
     false,
     type: DriftSqlType.int,
@@ -1985,27 +1974,144 @@ class $CryptoMetadataTable extends CryptoMetadata
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _vaultIdMeta = const VerificationMeta(
+    'vaultId',
+  );
+  @override
+  late final GeneratedColumn<String> vaultId = GeneratedColumn<String>(
+    'vault_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cryptoVersionMeta = const VerificationMeta(
+    'cryptoVersion',
+  );
+  @override
+  late final GeneratedColumn<int> cryptoVersion = GeneratedColumn<int>(
+    'crypto_version',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _schemaVersionMeta = const VerificationMeta(
+    'schemaVersion',
+  );
+  @override
+  late final GeneratedColumn<int> schemaVersion = GeneratedColumn<int>(
+    'schema_version',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _argon2ParametersMeta = const VerificationMeta(
+    'argon2Parameters',
+  );
+  @override
+  late final GeneratedColumn<String> argon2Parameters = GeneratedColumn<String>(
+    'argon2_parameters',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _wrappedDEKMeta = const VerificationMeta(
+    'wrappedDEK',
+  );
+  @override
+  late final GeneratedColumn<String> wrappedDEK = GeneratedColumn<String>(
+    'wrapped_d_e_k',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _checksumMeta = const VerificationMeta(
+    'checksum',
+  );
+  @override
+  late final GeneratedColumn<String> checksum = GeneratedColumn<String>(
+    'checksum',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
-    argon2Parameters,
-    algorithmVersion,
+    version,
     createdAt,
+    vaultId,
+    cryptoVersion,
+    schemaVersion,
+    argon2Parameters,
+    wrappedDEK,
+    checksum,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'crypto_metadata';
+  static const String $name = 'vault_headers';
   @override
   VerificationContext validateIntegrity(
-    Insertable<CryptoMetadataData> instance, {
+    Insertable<VaultHeader> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('version')) {
+      context.handle(
+        _versionMeta,
+        version.isAcceptableOrUnknown(data['version']!, _versionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_versionMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('vault_id')) {
+      context.handle(
+        _vaultIdMeta,
+        vaultId.isAcceptableOrUnknown(data['vault_id']!, _vaultIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_vaultIdMeta);
+    }
+    if (data.containsKey('crypto_version')) {
+      context.handle(
+        _cryptoVersionMeta,
+        cryptoVersion.isAcceptableOrUnknown(
+          data['crypto_version']!,
+          _cryptoVersionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_cryptoVersionMeta);
+    }
+    if (data.containsKey('schema_version')) {
+      context.handle(
+        _schemaVersionMeta,
+        schemaVersion.isAcceptableOrUnknown(
+          data['schema_version']!,
+          _schemaVersionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_schemaVersionMeta);
     }
     if (data.containsKey('argon2_parameters')) {
       context.handle(
@@ -2018,24 +2124,24 @@ class $CryptoMetadataTable extends CryptoMetadata
     } else if (isInserting) {
       context.missing(_argon2ParametersMeta);
     }
-    if (data.containsKey('algorithm_version')) {
+    if (data.containsKey('wrapped_d_e_k')) {
       context.handle(
-        _algorithmVersionMeta,
-        algorithmVersion.isAcceptableOrUnknown(
-          data['algorithm_version']!,
-          _algorithmVersionMeta,
+        _wrappedDEKMeta,
+        wrappedDEK.isAcceptableOrUnknown(
+          data['wrapped_d_e_k']!,
+          _wrappedDEKMeta,
         ),
       );
     } else if (isInserting) {
-      context.missing(_algorithmVersionMeta);
+      context.missing(_wrappedDEKMeta);
     }
-    if (data.containsKey('created_at')) {
+    if (data.containsKey('checksum')) {
       context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+        _checksumMeta,
+        checksum.isAcceptableOrUnknown(data['checksum']!, _checksumMeta),
       );
     } else if (isInserting) {
-      context.missing(_createdAtMeta);
+      context.missing(_checksumMeta);
     }
     return context;
   }
@@ -2043,75 +2149,119 @@ class $CryptoMetadataTable extends CryptoMetadata
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  CryptoMetadataData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  VaultHeader map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return CryptoMetadataData(
+    return VaultHeader(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      argon2Parameters: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}argon2_parameters'],
-      )!,
-      algorithmVersion: attachedDatabase.typeMapping.read(
+      version: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
-        data['${effectivePrefix}algorithm_version'],
+        data['${effectivePrefix}version'],
       )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
       )!,
+      vaultId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vault_id'],
+      )!,
+      cryptoVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}crypto_version'],
+      )!,
+      schemaVersion: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}schema_version'],
+      )!,
+      argon2Parameters: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}argon2_parameters'],
+      )!,
+      wrappedDEK: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}wrapped_d_e_k'],
+      )!,
+      checksum: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}checksum'],
+      )!,
     );
   }
 
   @override
-  $CryptoMetadataTable createAlias(String alias) {
-    return $CryptoMetadataTable(attachedDatabase, alias);
+  $VaultHeadersTable createAlias(String alias) {
+    return $VaultHeadersTable(attachedDatabase, alias);
   }
 }
 
-class CryptoMetadataData extends DataClass
-    implements Insertable<CryptoMetadataData> {
+class VaultHeader extends DataClass implements Insertable<VaultHeader> {
   final int id;
-  final String argon2Parameters;
-  final int algorithmVersion;
+  final int version;
   final DateTime createdAt;
-  const CryptoMetadataData({
+  final String vaultId;
+  final int cryptoVersion;
+  final int schemaVersion;
+  final String argon2Parameters;
+  final String wrappedDEK;
+  final String checksum;
+  const VaultHeader({
     required this.id,
-    required this.argon2Parameters,
-    required this.algorithmVersion,
+    required this.version,
     required this.createdAt,
+    required this.vaultId,
+    required this.cryptoVersion,
+    required this.schemaVersion,
+    required this.argon2Parameters,
+    required this.wrappedDEK,
+    required this.checksum,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['argon2_parameters'] = Variable<String>(argon2Parameters);
-    map['algorithm_version'] = Variable<int>(algorithmVersion);
+    map['version'] = Variable<int>(version);
     map['created_at'] = Variable<DateTime>(createdAt);
+    map['vault_id'] = Variable<String>(vaultId);
+    map['crypto_version'] = Variable<int>(cryptoVersion);
+    map['schema_version'] = Variable<int>(schemaVersion);
+    map['argon2_parameters'] = Variable<String>(argon2Parameters);
+    map['wrapped_d_e_k'] = Variable<String>(wrappedDEK);
+    map['checksum'] = Variable<String>(checksum);
     return map;
   }
 
-  CryptoMetadataCompanion toCompanion(bool nullToAbsent) {
-    return CryptoMetadataCompanion(
+  VaultHeadersCompanion toCompanion(bool nullToAbsent) {
+    return VaultHeadersCompanion(
       id: Value(id),
-      argon2Parameters: Value(argon2Parameters),
-      algorithmVersion: Value(algorithmVersion),
+      version: Value(version),
       createdAt: Value(createdAt),
+      vaultId: Value(vaultId),
+      cryptoVersion: Value(cryptoVersion),
+      schemaVersion: Value(schemaVersion),
+      argon2Parameters: Value(argon2Parameters),
+      wrappedDEK: Value(wrappedDEK),
+      checksum: Value(checksum),
     );
   }
 
-  factory CryptoMetadataData.fromJson(
+  factory VaultHeader.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return CryptoMetadataData(
+    return VaultHeader(
       id: serializer.fromJson<int>(json['id']),
-      argon2Parameters: serializer.fromJson<String>(json['argon2Parameters']),
-      algorithmVersion: serializer.fromJson<int>(json['algorithmVersion']),
+      version: serializer.fromJson<int>(json['version']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      vaultId: serializer.fromJson<String>(json['vaultId']),
+      cryptoVersion: serializer.fromJson<int>(json['cryptoVersion']),
+      schemaVersion: serializer.fromJson<int>(json['schemaVersion']),
+      argon2Parameters: serializer.fromJson<String>(json['argon2Parameters']),
+      wrappedDEK: serializer.fromJson<String>(json['wrappedDEK']),
+      checksum: serializer.fromJson<String>(json['checksum']),
     );
   }
   @override
@@ -2119,104 +2269,187 @@ class CryptoMetadataData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'argon2Parameters': serializer.toJson<String>(argon2Parameters),
-      'algorithmVersion': serializer.toJson<int>(algorithmVersion),
+      'version': serializer.toJson<int>(version),
       'createdAt': serializer.toJson<DateTime>(createdAt),
+      'vaultId': serializer.toJson<String>(vaultId),
+      'cryptoVersion': serializer.toJson<int>(cryptoVersion),
+      'schemaVersion': serializer.toJson<int>(schemaVersion),
+      'argon2Parameters': serializer.toJson<String>(argon2Parameters),
+      'wrappedDEK': serializer.toJson<String>(wrappedDEK),
+      'checksum': serializer.toJson<String>(checksum),
     };
   }
 
-  CryptoMetadataData copyWith({
+  VaultHeader copyWith({
     int? id,
-    String? argon2Parameters,
-    int? algorithmVersion,
+    int? version,
     DateTime? createdAt,
-  }) => CryptoMetadataData(
+    String? vaultId,
+    int? cryptoVersion,
+    int? schemaVersion,
+    String? argon2Parameters,
+    String? wrappedDEK,
+    String? checksum,
+  }) => VaultHeader(
     id: id ?? this.id,
-    argon2Parameters: argon2Parameters ?? this.argon2Parameters,
-    algorithmVersion: algorithmVersion ?? this.algorithmVersion,
+    version: version ?? this.version,
     createdAt: createdAt ?? this.createdAt,
+    vaultId: vaultId ?? this.vaultId,
+    cryptoVersion: cryptoVersion ?? this.cryptoVersion,
+    schemaVersion: schemaVersion ?? this.schemaVersion,
+    argon2Parameters: argon2Parameters ?? this.argon2Parameters,
+    wrappedDEK: wrappedDEK ?? this.wrappedDEK,
+    checksum: checksum ?? this.checksum,
   );
-  CryptoMetadataData copyWithCompanion(CryptoMetadataCompanion data) {
-    return CryptoMetadataData(
+  VaultHeader copyWithCompanion(VaultHeadersCompanion data) {
+    return VaultHeader(
       id: data.id.present ? data.id.value : this.id,
+      version: data.version.present ? data.version.value : this.version,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      vaultId: data.vaultId.present ? data.vaultId.value : this.vaultId,
+      cryptoVersion: data.cryptoVersion.present
+          ? data.cryptoVersion.value
+          : this.cryptoVersion,
+      schemaVersion: data.schemaVersion.present
+          ? data.schemaVersion.value
+          : this.schemaVersion,
       argon2Parameters: data.argon2Parameters.present
           ? data.argon2Parameters.value
           : this.argon2Parameters,
-      algorithmVersion: data.algorithmVersion.present
-          ? data.algorithmVersion.value
-          : this.algorithmVersion,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      wrappedDEK: data.wrappedDEK.present
+          ? data.wrappedDEK.value
+          : this.wrappedDEK,
+      checksum: data.checksum.present ? data.checksum.value : this.checksum,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('CryptoMetadataData(')
+    return (StringBuffer('VaultHeader(')
           ..write('id: $id, ')
+          ..write('version: $version, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('vaultId: $vaultId, ')
+          ..write('cryptoVersion: $cryptoVersion, ')
+          ..write('schemaVersion: $schemaVersion, ')
           ..write('argon2Parameters: $argon2Parameters, ')
-          ..write('algorithmVersion: $algorithmVersion, ')
-          ..write('createdAt: $createdAt')
+          ..write('wrappedDEK: $wrappedDEK, ')
+          ..write('checksum: $checksum')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, argon2Parameters, algorithmVersion, createdAt);
+  int get hashCode => Object.hash(
+    id,
+    version,
+    createdAt,
+    vaultId,
+    cryptoVersion,
+    schemaVersion,
+    argon2Parameters,
+    wrappedDEK,
+    checksum,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is CryptoMetadataData &&
+      (other is VaultHeader &&
           other.id == this.id &&
+          other.version == this.version &&
+          other.createdAt == this.createdAt &&
+          other.vaultId == this.vaultId &&
+          other.cryptoVersion == this.cryptoVersion &&
+          other.schemaVersion == this.schemaVersion &&
           other.argon2Parameters == this.argon2Parameters &&
-          other.algorithmVersion == this.algorithmVersion &&
-          other.createdAt == this.createdAt);
+          other.wrappedDEK == this.wrappedDEK &&
+          other.checksum == this.checksum);
 }
 
-class CryptoMetadataCompanion extends UpdateCompanion<CryptoMetadataData> {
+class VaultHeadersCompanion extends UpdateCompanion<VaultHeader> {
   final Value<int> id;
-  final Value<String> argon2Parameters;
-  final Value<int> algorithmVersion;
+  final Value<int> version;
   final Value<DateTime> createdAt;
-  const CryptoMetadataCompanion({
+  final Value<String> vaultId;
+  final Value<int> cryptoVersion;
+  final Value<int> schemaVersion;
+  final Value<String> argon2Parameters;
+  final Value<String> wrappedDEK;
+  final Value<String> checksum;
+  const VaultHeadersCompanion({
     this.id = const Value.absent(),
-    this.argon2Parameters = const Value.absent(),
-    this.algorithmVersion = const Value.absent(),
+    this.version = const Value.absent(),
     this.createdAt = const Value.absent(),
+    this.vaultId = const Value.absent(),
+    this.cryptoVersion = const Value.absent(),
+    this.schemaVersion = const Value.absent(),
+    this.argon2Parameters = const Value.absent(),
+    this.wrappedDEK = const Value.absent(),
+    this.checksum = const Value.absent(),
   });
-  CryptoMetadataCompanion.insert({
+  VaultHeadersCompanion.insert({
     this.id = const Value.absent(),
-    required String argon2Parameters,
-    required int algorithmVersion,
+    required int version,
     required DateTime createdAt,
-  }) : argon2Parameters = Value(argon2Parameters),
-       algorithmVersion = Value(algorithmVersion),
-       createdAt = Value(createdAt);
-  static Insertable<CryptoMetadataData> custom({
+    required String vaultId,
+    required int cryptoVersion,
+    required int schemaVersion,
+    required String argon2Parameters,
+    required String wrappedDEK,
+    required String checksum,
+  }) : version = Value(version),
+       createdAt = Value(createdAt),
+       vaultId = Value(vaultId),
+       cryptoVersion = Value(cryptoVersion),
+       schemaVersion = Value(schemaVersion),
+       argon2Parameters = Value(argon2Parameters),
+       wrappedDEK = Value(wrappedDEK),
+       checksum = Value(checksum);
+  static Insertable<VaultHeader> custom({
     Expression<int>? id,
-    Expression<String>? argon2Parameters,
-    Expression<int>? algorithmVersion,
+    Expression<int>? version,
     Expression<DateTime>? createdAt,
+    Expression<String>? vaultId,
+    Expression<int>? cryptoVersion,
+    Expression<int>? schemaVersion,
+    Expression<String>? argon2Parameters,
+    Expression<String>? wrappedDEK,
+    Expression<String>? checksum,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (argon2Parameters != null) 'argon2_parameters': argon2Parameters,
-      if (algorithmVersion != null) 'algorithm_version': algorithmVersion,
+      if (version != null) 'version': version,
       if (createdAt != null) 'created_at': createdAt,
+      if (vaultId != null) 'vault_id': vaultId,
+      if (cryptoVersion != null) 'crypto_version': cryptoVersion,
+      if (schemaVersion != null) 'schema_version': schemaVersion,
+      if (argon2Parameters != null) 'argon2_parameters': argon2Parameters,
+      if (wrappedDEK != null) 'wrapped_d_e_k': wrappedDEK,
+      if (checksum != null) 'checksum': checksum,
     });
   }
 
-  CryptoMetadataCompanion copyWith({
+  VaultHeadersCompanion copyWith({
     Value<int>? id,
-    Value<String>? argon2Parameters,
-    Value<int>? algorithmVersion,
+    Value<int>? version,
     Value<DateTime>? createdAt,
+    Value<String>? vaultId,
+    Value<int>? cryptoVersion,
+    Value<int>? schemaVersion,
+    Value<String>? argon2Parameters,
+    Value<String>? wrappedDEK,
+    Value<String>? checksum,
   }) {
-    return CryptoMetadataCompanion(
+    return VaultHeadersCompanion(
       id: id ?? this.id,
-      argon2Parameters: argon2Parameters ?? this.argon2Parameters,
-      algorithmVersion: algorithmVersion ?? this.algorithmVersion,
+      version: version ?? this.version,
       createdAt: createdAt ?? this.createdAt,
+      vaultId: vaultId ?? this.vaultId,
+      cryptoVersion: cryptoVersion ?? this.cryptoVersion,
+      schemaVersion: schemaVersion ?? this.schemaVersion,
+      argon2Parameters: argon2Parameters ?? this.argon2Parameters,
+      wrappedDEK: wrappedDEK ?? this.wrappedDEK,
+      checksum: checksum ?? this.checksum,
     );
   }
 
@@ -2226,25 +2459,45 @@ class CryptoMetadataCompanion extends UpdateCompanion<CryptoMetadataData> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (argon2Parameters.present) {
-      map['argon2_parameters'] = Variable<String>(argon2Parameters.value);
-    }
-    if (algorithmVersion.present) {
-      map['algorithm_version'] = Variable<int>(algorithmVersion.value);
+    if (version.present) {
+      map['version'] = Variable<int>(version.value);
     }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (vaultId.present) {
+      map['vault_id'] = Variable<String>(vaultId.value);
+    }
+    if (cryptoVersion.present) {
+      map['crypto_version'] = Variable<int>(cryptoVersion.value);
+    }
+    if (schemaVersion.present) {
+      map['schema_version'] = Variable<int>(schemaVersion.value);
+    }
+    if (argon2Parameters.present) {
+      map['argon2_parameters'] = Variable<String>(argon2Parameters.value);
+    }
+    if (wrappedDEK.present) {
+      map['wrapped_d_e_k'] = Variable<String>(wrappedDEK.value);
+    }
+    if (checksum.present) {
+      map['checksum'] = Variable<String>(checksum.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('CryptoMetadataCompanion(')
+    return (StringBuffer('VaultHeadersCompanion(')
           ..write('id: $id, ')
+          ..write('version: $version, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('vaultId: $vaultId, ')
+          ..write('cryptoVersion: $cryptoVersion, ')
+          ..write('schemaVersion: $schemaVersion, ')
           ..write('argon2Parameters: $argon2Parameters, ')
-          ..write('algorithmVersion: $algorithmVersion, ')
-          ..write('createdAt: $createdAt')
+          ..write('wrappedDEK: $wrappedDEK, ')
+          ..write('checksum: $checksum')
           ..write(')'))
         .toString();
   }
@@ -2259,7 +2512,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ItemTagsTable itemTags = $ItemTagsTable(this);
   late final $AuditLogsTable auditLogs = $AuditLogsTable(this);
   late final $SettingsTable settings = $SettingsTable(this);
-  late final $CryptoMetadataTable cryptoMetadata = $CryptoMetadataTable(this);
+  late final $VaultHeadersTable vaultHeaders = $VaultHeadersTable(this);
   late final VaultDao vaultDao = VaultDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -2272,7 +2525,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     itemTags,
     auditLogs,
     settings,
-    cryptoMetadata,
+    vaultHeaders,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -4229,24 +4482,34 @@ typedef $$SettingsTableProcessedTableManager =
       Setting,
       PrefetchHooks Function()
     >;
-typedef $$CryptoMetadataTableCreateCompanionBuilder =
-    CryptoMetadataCompanion Function({
+typedef $$VaultHeadersTableCreateCompanionBuilder =
+    VaultHeadersCompanion Function({
       Value<int> id,
-      required String argon2Parameters,
-      required int algorithmVersion,
+      required int version,
       required DateTime createdAt,
+      required String vaultId,
+      required int cryptoVersion,
+      required int schemaVersion,
+      required String argon2Parameters,
+      required String wrappedDEK,
+      required String checksum,
     });
-typedef $$CryptoMetadataTableUpdateCompanionBuilder =
-    CryptoMetadataCompanion Function({
+typedef $$VaultHeadersTableUpdateCompanionBuilder =
+    VaultHeadersCompanion Function({
       Value<int> id,
-      Value<String> argon2Parameters,
-      Value<int> algorithmVersion,
+      Value<int> version,
       Value<DateTime> createdAt,
+      Value<String> vaultId,
+      Value<int> cryptoVersion,
+      Value<int> schemaVersion,
+      Value<String> argon2Parameters,
+      Value<String> wrappedDEK,
+      Value<String> checksum,
     });
 
-class $$CryptoMetadataTableFilterComposer
-    extends Composer<_$AppDatabase, $CryptoMetadataTable> {
-  $$CryptoMetadataTableFilterComposer({
+class $$VaultHeadersTableFilterComposer
+    extends Composer<_$AppDatabase, $VaultHeadersTable> {
+  $$VaultHeadersTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -4258,13 +4521,8 @@ class $$CryptoMetadataTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get argon2Parameters => $composableBuilder(
-    column: $table.argon2Parameters,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get algorithmVersion => $composableBuilder(
-    column: $table.algorithmVersion,
+  ColumnFilters<int> get version => $composableBuilder(
+    column: $table.version,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4272,11 +4530,41 @@ class $$CryptoMetadataTableFilterComposer
     column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
   );
+
+  ColumnFilters<String> get vaultId => $composableBuilder(
+    column: $table.vaultId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get cryptoVersion => $composableBuilder(
+    column: $table.cryptoVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get schemaVersion => $composableBuilder(
+    column: $table.schemaVersion,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get argon2Parameters => $composableBuilder(
+    column: $table.argon2Parameters,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get wrappedDEK => $composableBuilder(
+    column: $table.wrappedDEK,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get checksum => $composableBuilder(
+    column: $table.checksum,
+    builder: (column) => ColumnFilters(column),
+  );
 }
 
-class $$CryptoMetadataTableOrderingComposer
-    extends Composer<_$AppDatabase, $CryptoMetadataTable> {
-  $$CryptoMetadataTableOrderingComposer({
+class $$VaultHeadersTableOrderingComposer
+    extends Composer<_$AppDatabase, $VaultHeadersTable> {
+  $$VaultHeadersTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -4288,13 +4576,8 @@ class $$CryptoMetadataTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get argon2Parameters => $composableBuilder(
-    column: $table.argon2Parameters,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get algorithmVersion => $composableBuilder(
-    column: $table.algorithmVersion,
+  ColumnOrderings<int> get version => $composableBuilder(
+    column: $table.version,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -4302,11 +4585,41 @@ class $$CryptoMetadataTableOrderingComposer
     column: $table.createdAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get vaultId => $composableBuilder(
+    column: $table.vaultId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get cryptoVersion => $composableBuilder(
+    column: $table.cryptoVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get schemaVersion => $composableBuilder(
+    column: $table.schemaVersion,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get argon2Parameters => $composableBuilder(
+    column: $table.argon2Parameters,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get wrappedDEK => $composableBuilder(
+    column: $table.wrappedDEK,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get checksum => $composableBuilder(
+    column: $table.checksum,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
-class $$CryptoMetadataTableAnnotationComposer
-    extends Composer<_$AppDatabase, $CryptoMetadataTable> {
-  $$CryptoMetadataTableAnnotationComposer({
+class $$VaultHeadersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VaultHeadersTable> {
+  $$VaultHeadersTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -4316,78 +4629,111 @@ class $$CryptoMetadataTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
+  GeneratedColumn<int> get version =>
+      $composableBuilder(column: $table.version, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<String> get vaultId =>
+      $composableBuilder(column: $table.vaultId, builder: (column) => column);
+
+  GeneratedColumn<int> get cryptoVersion => $composableBuilder(
+    column: $table.cryptoVersion,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get schemaVersion => $composableBuilder(
+    column: $table.schemaVersion,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<String> get argon2Parameters => $composableBuilder(
     column: $table.argon2Parameters,
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get algorithmVersion => $composableBuilder(
-    column: $table.algorithmVersion,
+  GeneratedColumn<String> get wrappedDEK => $composableBuilder(
+    column: $table.wrappedDEK,
     builder: (column) => column,
   );
 
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+  GeneratedColumn<String> get checksum =>
+      $composableBuilder(column: $table.checksum, builder: (column) => column);
 }
 
-class $$CryptoMetadataTableTableManager
+class $$VaultHeadersTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $CryptoMetadataTable,
-          CryptoMetadataData,
-          $$CryptoMetadataTableFilterComposer,
-          $$CryptoMetadataTableOrderingComposer,
-          $$CryptoMetadataTableAnnotationComposer,
-          $$CryptoMetadataTableCreateCompanionBuilder,
-          $$CryptoMetadataTableUpdateCompanionBuilder,
+          $VaultHeadersTable,
+          VaultHeader,
+          $$VaultHeadersTableFilterComposer,
+          $$VaultHeadersTableOrderingComposer,
+          $$VaultHeadersTableAnnotationComposer,
+          $$VaultHeadersTableCreateCompanionBuilder,
+          $$VaultHeadersTableUpdateCompanionBuilder,
           (
-            CryptoMetadataData,
-            BaseReferences<
-              _$AppDatabase,
-              $CryptoMetadataTable,
-              CryptoMetadataData
-            >,
+            VaultHeader,
+            BaseReferences<_$AppDatabase, $VaultHeadersTable, VaultHeader>,
           ),
-          CryptoMetadataData,
+          VaultHeader,
           PrefetchHooks Function()
         > {
-  $$CryptoMetadataTableTableManager(
-    _$AppDatabase db,
-    $CryptoMetadataTable table,
-  ) : super(
+  $$VaultHeadersTableTableManager(_$AppDatabase db, $VaultHeadersTable table)
+    : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$CryptoMetadataTableFilterComposer($db: db, $table: table),
+              $$VaultHeadersTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$CryptoMetadataTableOrderingComposer($db: db, $table: table),
+              $$VaultHeadersTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$CryptoMetadataTableAnnotationComposer($db: db, $table: table),
+              $$VaultHeadersTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<String> argon2Parameters = const Value.absent(),
-                Value<int> algorithmVersion = const Value.absent(),
+                Value<int> version = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
-              }) => CryptoMetadataCompanion(
+                Value<String> vaultId = const Value.absent(),
+                Value<int> cryptoVersion = const Value.absent(),
+                Value<int> schemaVersion = const Value.absent(),
+                Value<String> argon2Parameters = const Value.absent(),
+                Value<String> wrappedDEK = const Value.absent(),
+                Value<String> checksum = const Value.absent(),
+              }) => VaultHeadersCompanion(
                 id: id,
-                argon2Parameters: argon2Parameters,
-                algorithmVersion: algorithmVersion,
+                version: version,
                 createdAt: createdAt,
+                vaultId: vaultId,
+                cryptoVersion: cryptoVersion,
+                schemaVersion: schemaVersion,
+                argon2Parameters: argon2Parameters,
+                wrappedDEK: wrappedDEK,
+                checksum: checksum,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                required String argon2Parameters,
-                required int algorithmVersion,
+                required int version,
                 required DateTime createdAt,
-              }) => CryptoMetadataCompanion.insert(
+                required String vaultId,
+                required int cryptoVersion,
+                required int schemaVersion,
+                required String argon2Parameters,
+                required String wrappedDEK,
+                required String checksum,
+              }) => VaultHeadersCompanion.insert(
                 id: id,
-                argon2Parameters: argon2Parameters,
-                algorithmVersion: algorithmVersion,
+                version: version,
                 createdAt: createdAt,
+                vaultId: vaultId,
+                cryptoVersion: cryptoVersion,
+                schemaVersion: schemaVersion,
+                argon2Parameters: argon2Parameters,
+                wrappedDEK: wrappedDEK,
+                checksum: checksum,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -4397,21 +4743,21 @@ class $$CryptoMetadataTableTableManager
       );
 }
 
-typedef $$CryptoMetadataTableProcessedTableManager =
+typedef $$VaultHeadersTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $CryptoMetadataTable,
-      CryptoMetadataData,
-      $$CryptoMetadataTableFilterComposer,
-      $$CryptoMetadataTableOrderingComposer,
-      $$CryptoMetadataTableAnnotationComposer,
-      $$CryptoMetadataTableCreateCompanionBuilder,
-      $$CryptoMetadataTableUpdateCompanionBuilder,
+      $VaultHeadersTable,
+      VaultHeader,
+      $$VaultHeadersTableFilterComposer,
+      $$VaultHeadersTableOrderingComposer,
+      $$VaultHeadersTableAnnotationComposer,
+      $$VaultHeadersTableCreateCompanionBuilder,
+      $$VaultHeadersTableUpdateCompanionBuilder,
       (
-        CryptoMetadataData,
-        BaseReferences<_$AppDatabase, $CryptoMetadataTable, CryptoMetadataData>,
+        VaultHeader,
+        BaseReferences<_$AppDatabase, $VaultHeadersTable, VaultHeader>,
       ),
-      CryptoMetadataData,
+      VaultHeader,
       PrefetchHooks Function()
     >;
 
@@ -4429,6 +4775,6 @@ class $AppDatabaseManager {
       $$AuditLogsTableTableManager(_db, _db.auditLogs);
   $$SettingsTableTableManager get settings =>
       $$SettingsTableTableManager(_db, _db.settings);
-  $$CryptoMetadataTableTableManager get cryptoMetadata =>
-      $$CryptoMetadataTableTableManager(_db, _db.cryptoMetadata);
+  $$VaultHeadersTableTableManager get vaultHeaders =>
+      $$VaultHeadersTableTableManager(_db, _db.vaultHeaders);
 }

@@ -6,7 +6,7 @@ import 'tables/tags_table.dart';
 import 'tables/item_tags_table.dart';
 import 'tables/audit_logs_table.dart';
 import 'tables/settings_table.dart';
-import 'tables/crypto_metadata_table.dart';
+import 'tables/vault_header_table.dart';
 import 'daos/vault_dao.dart';
 part 'database.g.dart';
 @DriftDatabase(
@@ -17,7 +17,7 @@ part 'database.g.dart';
     ItemTags,
     AuditLogs,
     Settings,
-    CryptoMetadata,
+    VaultHeaders,
   ],
   daos: [VaultDao],
 )

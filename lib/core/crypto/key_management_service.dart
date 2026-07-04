@@ -16,16 +16,13 @@ class KeyManagementService {
     return SecretKey(bytes);
   }
 
-  Future<void> wrapAndStoreDek(SecretKey dek, SecretKey kek) async {
+  Future<String> wrapDek(SecretKey dek, SecretKey kek) async {
     final dekBytes = Uint8List.fromList(await dek.extractBytes());
     final result = await _cryptoService.encrypt(dekBytes, kek);
-    final payload = '${base64Encode(result.ciphertext)}.${base64Encode(result.nonce)}.${base64Encode(result.mac)}';
-    await _secureStorage.write(key: 'wrapped_dek', value: payload);
+    return '${base64Encode(result.ciphertext)}.${base64Encode(result.nonce)}.${base64Encode(result.mac)}';
   }
 
-  Future<SecretKey> unwrapDek(SecretKey kek) async {
-    final payload = await _secureStorage.read(key: 'wrapped_dek');
-    if (payload == null) throw Exception('Unable to unlock vault.');
+  Future<SecretKey> unwrapDek(String payload, SecretKey kek) async {
     final parts = payload.split('.');
     if (parts.length != 3) throw Exception('Unable to unlock vault.');
     try {
@@ -37,5 +34,16 @@ class KeyManagementService {
     } catch (_) {
       throw Exception('Unable to unlock vault.');
     }
+  }
+
+  Future<void> wrapAndStoreDekBiometric(SecretKey dek, SecretKey hardwareKek) async {
+    final payload = await wrapDek(dek, hardwareKek);
+    await _secureStorage.write(key: 'wrapped_dek_biometric', value: payload);
+  }
+
+  Future<SecretKey> unwrapDekBiometric(SecretKey hardwareKek) async {
+    final payload = await _secureStorage.read(key: 'wrapped_dek_biometric');
+    if (payload == null) throw Exception('Unable to unlock vault (biometric absent).');
+    return unwrapDek(payload, hardwareKek);
   }
 }

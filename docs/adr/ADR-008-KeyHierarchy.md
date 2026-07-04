@@ -29,15 +29,26 @@ Data Encryption Key (DEK)
 1. **Master Key (KEK)**: Derived directly from the Master Password using Argon2id. It is NEVER used to encrypt user secrets. It is only used to wrap (encrypt) the DEK.
 2. **Data Encryption Key (DEK)**: A randomly generated 32-byte secure key. This DEK is used to encrypt all user secrets. 
 
-## Secondary Protection (Android Keystore / Secure Storage)
-The DEK is further protected. We will store the wrapped DEK in the local database or securely in the OS's Secure Storage (Android Keystore/iOS Keychain) if biometric unlocking is enabled, ensuring hardware-backed protection.
+## Payload Layout
+For AES-GCM encryption, the resulting payload encapsulates the ciphertext and the authentication tag (MAC). We will append the 16-byte MAC tag directly to the end of the ciphertext:
+
+```
+Encrypted Payload Structure
+
++----------------------+------------------+
+| Ciphertext (N bytes) | MAC (16 bytes)   |
++----------------------+------------------+
+```
+We define these constants to avoid magic numbers in the binary processing logic:
+- `kGcmTagLength = 16`
+- `kNonceLength = 12`
+- `kKeyLength = 32`
 
 ## Consequences
 ### Positive
-* **Instant Password Changes**: Changing a Master Password only requires re-wrapping the DEK. We don't need to touch the secrets table at all. This operation is atomic and extremely fast.
-* **Security Isolation**: The password-derived key is only used for one encryption operation (wrapping the DEK). This minimizes its exposure.
-* **Migration Path**: If we introduce team vaults or sharing, we just securely share the DEK without exposing Master Passwords.
+* **Instant Password Changes**: Changing a Master Password only requires re-wrapping the DEK. We don't need to touch the secrets table at all.
+* **Security Isolation**: The password-derived key is only used for one encryption operation (wrapping the DEK).
+* **Robust Serialization**: Storing the MAC alongside the ciphertext avoids database schema issues.
 
 ### Negative
 * Increased architectural complexity.
-* We must manage the DEK lifecycle carefully (memory hygiene).

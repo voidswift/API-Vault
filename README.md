@@ -1,3 +1,5 @@
+> **"API Vault favors correctness over convenience, explicitness over cleverness, and verified guarantees over assumed safety."**
+
 # API Vault
 
 **API Vault is an offline-first, open-source Developer Security Hub that securely stores secrets, manages API credentials, provides cryptographic utilities, and offers essential developer security tools, all protected by modern encryption and designed with privacy by default.**
