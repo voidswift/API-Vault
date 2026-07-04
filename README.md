@@ -1,17 +1,9 @@
-# api_vault
+# API Vault
 
-A new Flutter project.
+**API Vault is an offline-first, open-source Developer Security Hub that securely stores secrets, manages API credentials, provides cryptographic utilities, and offers essential developer security tools, all protected by modern encryption and designed with privacy by default.**
 
-## Getting Started
+## 🚨 The Golden Rule
 
-This project is a starting point for a Flutter application.
+> **Plaintext secrets may exist only in volatile memory and only for the minimum time required to complete an operation. Plaintext secrets must never be written to disk, logs, backups, or persistent storage.**
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Everything in API Vault revolves around that sentence.
