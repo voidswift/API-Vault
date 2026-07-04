@@ -67,7 +67,7 @@ void main() {
   });
 
   test('Foreign key enforcement and Cascade Delete', () async {
-    final categoryId = 'cat_1';
+    const categoryId = 'cat_1';
     
     await db.into(db.categories).insert(
       CategoriesCompanion.insert(
